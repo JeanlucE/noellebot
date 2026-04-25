@@ -10,6 +10,9 @@ if (result.error) {
 const { Client, GatewayIntentBits } = require('discord.js');
 const { handleMessage } = require('./handler');
 
+// Debug: log all env var keys to see what Railway is providing
+console.log('[NoelleBot] Available env vars:', Object.keys(process.env).filter(k => ['DISCORD_TOKEN', 'GUILD_ID', 'CHANNEL_ID'].includes(k)));
+
 // Validate required env vars
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const GUILD_ID = process.env.GUILD_ID;
