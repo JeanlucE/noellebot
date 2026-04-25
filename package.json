@@ -1,0 +1,30 @@
+{
+  "name": "noellebot",
+  "version": "1.0.0",
+  "description": "A Noelle-themed Discord bot that converts Genshin Impact redemption codes into gift links",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test test/**/*.test.js",
+    "lint": "eslint src/ test/"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "discord",
+    "genshin",
+    "noelle",
+    "bot"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.16.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "eslint": "^9.0.0"
+  }
+}
