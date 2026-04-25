@@ -2,6 +2,14 @@
 
 const { formatCodeLinks, buildEmbed } = require('./formatter');
 
+// Shortest historically listed code is 8 chars (CN code: YUANSHEN).
+// We require lines to be longer than that to reduce false positives.
+const MIN_CODE_LENGTH = 9;
+
+function hasEmoji(text) {
+  return /\p{Extended_Pictographic}/u.test(text) || /<a?:\w+:\d+>/.test(text);
+}
+
 /**
  * Parses a message's content to extract single-word-per-line codes.
  * Returns an array of words if every non-empty line is a single word,
@@ -10,7 +18,11 @@ const { formatCodeLinks, buildEmbed } = require('./formatter');
  * @returns {string[] | null}
  */
 function parseMessage(content) {
-  const lines = content.split('\n').map((line) => line.trim()).filter((line) => line.length > 0);
+  const lines = content
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .filter((line) => !hasEmoji(line));
 
   if (lines.length === 0) {
     return null;
@@ -18,6 +30,10 @@ function parseMessage(content) {
 
   for (const line of lines) {
     if (line.includes(' ')) {
+      return null;
+    }
+
+    if (line.length < MIN_CODE_LENGTH) {
       return null;
     }
   }
@@ -67,6 +83,8 @@ async function handleMessage(message, config) {
 }
 
 module.exports = {
+  MIN_CODE_LENGTH,
+  hasEmoji,
   parseMessage,
   handleMessage,
 };
