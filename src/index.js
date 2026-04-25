@@ -1,6 +1,11 @@
 'use strict';
 
-require('dotenv').config();
+const path = require('path');
+const envPath = path.resolve(__dirname, '..', '.env');
+const result = require('dotenv').config({ path: envPath });
+if (result.error) {
+  console.log('[NoelleBot] No .env file found, using system environment variables.');
+}
 
 const { Client, GatewayIntentBits } = require('discord.js');
 const { handleMessage } = require('./handler');
